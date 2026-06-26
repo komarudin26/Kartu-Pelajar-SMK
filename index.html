@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aplikasi Kartu Pelajar - SMK Negeri 1 Gedong Tataan</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .id-card {
+      width: 600px;
+      height: 380px;
+      background: white;
+      /* border: 3px solid #3b82f6; */
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+      overflow: hidden;
+    }
+    .photo-frame {
+      border: 3px solid #eab308;
+      width: 110px;
+      height: 145px;
+      background: #f3f4f6;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    @media print {
+      body * { visibility: hidden; }
+      #printArea, #printArea * { visibility: visible; }
+      #printArea { 
+        position: absolute; 
+        left: 0; 
+        top: 0; 
+        box-shadow: none; 
+        border: 2px solid #000;
+        -webkit-print-color-adjust: exact; 
+        print-color-adjust: exact;
+      }
+    }
+  </style>
+</head>
+<body class="bg-gray-100 p-6">
+
+<div class="max-w-4xl mx-auto">
+  <h2 class="text-2xl font-bold mb-6 text-center text-gray-800">Formulir Kartu Pelajar</h2>
+  
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+    <form id="studentForm" class="bg-white p-6 rounded-xl shadow-md border border-gray-200">
+      <div class="mb-3"><input type="text" id="inNama" class="w-full p-2 border rounded" placeholder="Nama Lengkap" required></div>
+      <div class="mb-3"><input type="text" id="inNis" class="w-full p-2 border rounded" placeholder="NIS" required></div>
+      <div class="mb-3"><input type="text" id="inGender" class="w-full p-2 border rounded" placeholder="Gender" required></div>
+      <div class="mb-3"><input type="text" id="inTtl" class="w-full p-2 border rounded" placeholder="TTL (Contoh: Sumberejo, 03-12-2009)" required></div>
+      <div class="mb-3"><input type="text" id="inAlamat" class="w-full p-2 border rounded" placeholder="Alamat" required></div>
+      <div class="mb-3"><input type="text" id="inAgama" class="w-full p-2 border rounded" placeholder="Agama" required></div>
+      <div class="mb-3"><input type="text" id="inJurusan" class="w-full p-2 border rounded" placeholder="Jurusan" required></div> 
+      <div class="mb-3">
+        <label class="text-sm font-semibold text-gray-600 block mb-1">Upload Foto (3x4):</label>
+        <input type="file" id="inFoto" accept="image/*" class="w-full p-2 border rounded">
+      </div>
+      <button type="submit" class="bg-blue-600 text-white w-full py-2 rounded font-bold hover:bg-blue-700">Tampilkan Kartu</button>
+    </form>
+
+    <div id="resultArea" class="hidden flex flex-col gap-4">
+      <div id="printArea" class="id-card mx-auto">
+        <!-- Header -->
+        <div class="bg-sky-600 text-white p-2 flex items-center justify-between border-b-4 border-black">
+          <img src="https://lh3.googleusercontent.com/d/1mkD_pNOMEzRy8Z5HY0xTU1py6EEUgxD2" class="w-14 h-14 object-contain" alt="">
+          <div class="text-center font-bold">
+            <div class="text-[11px]">PEMERINTAH PROVINSI LAMPUNG</div>
+            <div class="text-[11px]">DINAS PENDIDIKAN DAN KEBUDAYAAN</div>
+            <div class="text-[16px] uppercase">SMK NEGERI 1 GEDONG TATAAN</div>
+          </div>
+          <img src="https://lh3.googleusercontent.com/d/1a-66BUnkbzkflzQ-Afs6FadEQcL9p8tv" class="w-14 h-14 object-contain" alt="">
+        </div>
+        
+        <div class="bg-yellow-400 py-1 text-center text-[10px] font-bold border-b-4 border-black uppercase">
+          Jl. Veteran II Damc Desa Wiyono Kec. Gedong Tataan Kab. Pesawaran - Lampung
+        </div>
+        
+        <!-- Body dengan Judul dan Grid dalam satu Div -->
+         
+        <h4 class="font-bold text-center pt-1 underline uppercase tracking-widest text-xs">Kartu Pelajar</h4>
+        <div class="flex flex-grow p-2 gap-4 items-start">
+          <div class="photo-frame flex-shrink-0">
+             <img id="outFoto" class="w-full h-full object-cover" src="" alt="Foto">
+          </div>
+          
+          <!-- Container Judul dan Grid -->
+          <div class="w-full">
+            <div class="grid grid-cols-[80px_10px_1fr] gap-x-2 gap-y-1.5 uppercase text-xs">
+              <span class="font-bold">Nama</span><span>:</span><span id="outNama"></span>
+              <span class="font-bold">NIS</span><span>:</span><span id="outNis"></span>
+              <span class="font-bold">Gender</span><span>:</span><span id="outGender"></span>
+              <span class="font-bold">TTL</span><span>:</span><span id="outTtl"></span>
+              <span class="font-bold">Alamat</span><span>:</span><span id="outAlamat"></span>
+              <span class="font-bold">Agama</span><span>:</span><span id="outAgama"></span>
+              <span class="font-bold">Jurusan</span><span>:</span><span id="outJurusan"></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Footer -->
+         <div class="flex justify-between items-end border-gray-200"> 
+            <div class="bg-sky-600 text-white text-[8px] font-bold px-3 py-1 italic shadow-sm">
+           *Hanya Berlaku Selama Menjadi Siswa
+        </div>
+        <div class="text-[9px] text-left font-bold pr-1 ">  
+            <img src="https://lh3.googleusercontent.com/d/1U4DkFIJSt1fC2B-vVXqkbMytR5o6SIm1" class="max-w-40 object-contain" alt=""> 
+        </div> 
+      </div>
+      </div>
+      <button onclick="window.print()" class="bg-green-600 text-white py-3 rounded-xl font-bold hover:bg-green-700">Cetak / Simpan PDF</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.getElementById('studentForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    document.getElementById('outNama').innerText = document.getElementById('inNama').value;
+    document.getElementById('outNis').innerText = document.getElementById('inNis').value;
+    document.getElementById('outGender').innerText = document.getElementById('inGender').value;
+    document.getElementById('outTtl').innerText = document.getElementById('inTtl').value;
+    document.getElementById('outAlamat').innerText = document.getElementById('inAlamat').value;
+    document.getElementById('outAgama').innerText = document.getElementById('inAgama').value;
+    document.getElementById('outJurusan').innerText = document.getElementById('inJurusan').value; 
+    
+    const file = document.getElementById('inFoto').files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function(e) { document.getElementById('outFoto').src = e.target.result; }
+      reader.readAsDataURL(file);
+    }
+    document.getElementById('resultArea').classList.remove('hidden');
+  });
+</script>
+</body>
+</html>
